@@ -72,6 +72,20 @@ app.get("/latest", async (req, res) => {
   }
 });
 
+app.get("/testupload", async (req, res) => {
+  try {
+    await pool.query(
+      "INSERT INTO moisture_data (moisture) VALUES ($1)",
+      [123]
+    );
+
+    res.send("Test data inserted");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server started");
 });
