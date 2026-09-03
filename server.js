@@ -12,9 +12,12 @@ const pool = new Pool({
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
 app.post("/upload", async (req, res) => {
   try {
-
     const { temperature, humidity } = req.body;
 
     await pool.query(
@@ -23,11 +26,12 @@ app.post("/upload", async (req, res) => {
     );
 
     res.send("OK");
-
   } catch (err) {
     console.error(err);
     res.status(500).send("Error");
   }
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server started");
+});
