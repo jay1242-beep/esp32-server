@@ -32,6 +32,16 @@ app.post("/upload", async (req, res) => {
   }
 });
 
+app.get("/dbtest", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Database error");
+  }
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server started");
 });
